@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>宝宝满月照</title>
+  <link rel="stylesheet" href="weui.min.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .picture-container {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .picture-container .weui-grid {
+      padding: 5px;
+      height: 90px;
+    }
+
+    .picture-container img {
+      display: block;
+      width: 100%;
+    }
+
+  </style>
+</head>
+<body id="app">
+<div class="weui-grids picture-container">
+  <div class="weui-grid" v-for="image in images" @click="viewBigImage(image)">
+    <img :src="image+imageSuffix" alt=""/>
+  </div>
+</div>
+<div class="page gallery js_show" v-show="activeImage" @click="activeImage=null">
+  <div class="page__hd">
+    <h1 class="page__title">Gallery</h1>
+    <p class="page__desc">画廊，可实现上传图片的展示或幻灯片播放</p>
+  </div>
+  <div class="weui-gallery" style="display: block">
+    <span class="weui-gallery__img" :style="activeImageStyle">
+
+    </span>
+    <div class="weui-gallery__opr" v-show="!loadingImageFinished">
+      <a href="javascript:" class="weui-gallery__del">
+        <i class="weui-loading"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<img :src="activeImage" alt="" v-if="activeImage" style="opacity: 0;z-index: -1;position: absolute" id="imageLoader"/>
+<script src="vue.min.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      imagePrefix: 'http://image.xmguiguo.cn/baby/fullmonth/',
+      imageSuffix: '?imageView2/2/h/100',
+      images: [
+        'IMG_0203.jpg',
+        'IMG_0204.jpg',
+        'IMG_0205.jpg',
+        'IMG_0206.jpg',
+        'IMG_0207.jpg',
+        'IMG_0208.jpg',
+        'IMG_0209.jpg',
+        'IMG_0210.jpg',
+        'IMG_0211.jpg',
+        'IMG_0212.jpg',
+        'IMG_0213.jpg',
+        'IMG_0214.jpg',
+        'IMG_0215.jpg',
+        'IMG_0216.jpg',
+        'IMG_0217.jpg',
+        'IMG_0218.jpg',
+        'IMG_0219.jpg',
+        'IMG_0220.jpg',
+        'IMG_0221.jpg',
+        'IMG_0222.jpg',
+        'IMG_0223.jpg',
+        'IMG_0225.jpg',
+        'IMG_0226.jpg',
+        'IMG_0227.jpg',
+        'IMG_0228.jpg',
+        'IMG_0229.jpg',
+        'IMG_0233.jpg',
+        'IMG_0234.jpg',
+        'IMG_0235.jpg',
+        'IMG_0236.jpg',
+        'IMG_0237.jpg',
+        'IMG_0238.jpg',
+        'IMG_0239.jpg',
+        'IMG_0240.jpg',
+        'IMG_0241.jpg',
+        'IMG_0242.jpg',
+        'IMG_0243.jpg',
+        'IMG_0244.jpg',
+        'IMG_0245.jpg',
+        'IMG_0246.jpg',
+        'IMG_0247.jpg',
+        'IMG_0248.jpg',
+        'IMG_0249.jpg',
+        'IMG_0250.jpg',
+        'IMG_0251.jpg',
+        'IMG_0252.jpg',
+        'IMG_0253.jpg',
+        'IMG_0254.jpg',
+        'IMG_0255.jpg',
+        'IMG_0256.jpg',
+        'IMG_0257.jpg',
+        'IMG_0258.jpg',
+        'IMG_0259.jpg',
+        'IMG_0260.jpg',
+        'IMG_0261.jpg',
+        'IMG_0268.jpg',
+        'IMG_0269.jpg',
+        'IMG_0270.jpg',
+        'IMG_0272.jpg',
+        'IMG_0273.jpg',
+        'IMG_0274.jpg',
+        'IMG_0275.jpg',
+        'IMG_0276.jpg',
+        'IMG_0277.jpg',
+        'IMG_0278.jpg',
+        'IMG_0279.jpg',
+        'IMG_0280.jpg',
+        'IMG_0281.jpg',
+        'IMG_0282.jpg',
+        'IMG_0283.jpg',
+        'IMG_0284.jpg',
+        'IMG_0285.jpg',
+        'IMG_0287.jpg',
+        'IMG_0288.jpg',
+        'IMG_0289.jpg',
+        'IMG_0290.jpg'
+      ],
+      activeImage: null,
+      loadingImageFinished: false
+    },
+    methods: {
+      getImages: function () {
+        var imagePrefix = this.imagePrefix
+        this.images = this.images.map(function (image) {
+          return imagePrefix + image
+        })
+      },
+      viewBigImage: function (image) {
+        this.activeImage = image
+        var self = this
+        self.loadingImageFinished = false
+        this.$nextTick(function(){
+          window.imageLoader.onload = function () {
+            self.loadingImageFinished = true
+          }
+        })
+      }
+    },
+    computed: {
+      activeImageStyle () {
+        if (!this.activeImage) return {}
+
+        return {
+          'background-image': 'url(' + this.activeImage + ')'
+        }
+      }
+    },
+    created: function () {
+      this.getImages()
+    }
+  })
+</script>
+</body>
+</html>
